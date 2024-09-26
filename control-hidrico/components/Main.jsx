@@ -1,17 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Pressable, SafeAreaView } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { StyleSheet, Text, View, Pressable, Image } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import menu from "../images/menu_icon.png";
 
 export function Main() {
 
-    
-  const insets = useSafeAreaInsets();
-
   return (
-    <View style={{ flex: 1, paddingTop: insets.top, paddingBottom: insets.bottom }}>
+    <SafeAreaProvider style={{width: '100%'}}>
+      <SafeAreaView style={styles.main_container}>
         <View style={styles.top_bar}>
-
+          <Image source={menu}/>
         </View>
 
         <View style={styles.nav_container}>
@@ -25,8 +25,10 @@ export function Main() {
             <Pressable style={styles.button}>
                 <Text>Status</Text>
             </Pressable>        
-        </View>        
-    </View>
+        </View>            
+      </SafeAreaView>
+   
+    </SafeAreaProvider>
   );
 }
 
@@ -35,7 +37,8 @@ const styles = StyleSheet.create({
   main_container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#092327',
+    backgroundColor: '#000',
+    width: '100%',
   },
 
   top_bar: {
@@ -45,7 +48,7 @@ const styles = StyleSheet.create({
   },
 
   nav_container: {
-    backgroundColor: '#000',
+    backgroundColor: '#fff',
     width: '100%',
     maxWidth: 800,
     height: 600,
