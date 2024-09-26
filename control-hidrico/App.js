@@ -12,6 +12,7 @@ export default function App() {
   );
 }
 
+
 const styles = StyleSheet.create({
 
   main_container: {
