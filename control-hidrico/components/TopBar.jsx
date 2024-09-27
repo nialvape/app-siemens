@@ -1,21 +1,17 @@
-import { View, Pressable, Image, StyleSheet } from 'react-native';
-import account from '../images/account_icon.png';
-import menu from "../images/menu_icon.png";
+import { View, StyleSheet } from 'react-native';
+import Menu from './Menu';
+import Account from './Account';
 
 export default function TopBar() {
     return (
         <View style={styles.top_bar}>
-            <Pressable>
-                <Image source={menu} style={styles.top_bar_icon}/>
-            </Pressable>
-            <Pressable>
-                <Image source={account} style={styles.top_bar_icon}/>
-            </Pressable>
+            <Menu />
+            <Account />
         </View>
-    )
+    );
 }
 
-const styles = StyleSheet.create ({
+const styles = StyleSheet.create({
     top_bar: {
         height: 50,
         width: '100%',
@@ -23,11 +19,5 @@ const styles = StyleSheet.create ({
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: 25,
-      },
-    
-      top_bar_icon: {
-        width: 50,
-        height: 50,
-        resizeMode: 'center',
-      },
-})
+    },
+});

@@ -1,46 +1,49 @@
 import React from 'react';
-import { StyleSheet, Text, View, Pressable,} from 'react-native';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { Link } from 'expo-router';
 
 export function Main() {
-
   return (
     <View style={styles.main_container}>
       <View style={styles.nav_container}>
-        <Link href="/consumo" asChild style={styles.button}>
-        <Pressable>
-            <Text>Consumo</Text>
-        </Pressable>        
+        {/* Botón de Consumo */}
+        <Link href="/consumo" asChild>
+          <Pressable style={styles.button}>
+            <Text style={styles.buttonText}>Consumo</Text>
+          </Pressable>
         </Link>
-        <Link href="/calidad" asChild style={styles.button}>
-        <Pressable style={styles.button}>
-            <Text>Calidad</Text>
-        </Pressable>        
+        
+        {/* Botón de Calidad */}
+        <Link href="/calidad" asChild>
+          <Pressable style={styles.button}>
+            <Text style={styles.buttonText}>Calidad</Text>
+          </Pressable>
         </Link>
-        <Link href="/status" asChild style={styles.button}>
-        <Pressable style={styles.button}>
-            <Text>Status</Text>
-        </Pressable>        
+
+        {/* Botón de Status */}
+        <Link href="/status" asChild>
+          <Pressable style={styles.button}>
+            <Text style={styles.buttonText}>Status</Text>
+          </Pressable>
         </Link>
-        <Link href="/consumo" asChild style={styles.button}>
-        <Pressable style={styles.button}>
-            <Text>Ranking</Text>
-        </Pressable>           
+
+        {/* Botón de Ranking */}
+        <Link href="/ranking" asChild>
+          <Pressable style={styles.button}>
+            <Text style={styles.buttonText}>Ranking</Text>
+          </Pressable>
         </Link>
-      </View>          
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-
   main_container: {
     flex: 1,
     alignItems: 'center',
     width: '100%',
-    justifyContent: 'space-between',
   },
-
   nav_container: {
     width: '100%',
     maxWidth: 800,
@@ -51,7 +54,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent:'space-between',
   },
-
   button: {
     backgroundColor: '#4E8098',
     width: '100%',
@@ -59,5 +61,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 20,
-  }
+    marginBottom: 10,
+  },
+  buttonText: {
+    color: '#FFFFFF',
+  },
 });
