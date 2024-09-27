@@ -6,19 +6,11 @@ export default function App() {
 
 
   return (
-    <View style={styles.main_container}>
+    <View>
       <Main/>
     </View>
   );
 }
 
 
-const styles = StyleSheet.create({
 
-  main_container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#092327',
-  },
-
-});

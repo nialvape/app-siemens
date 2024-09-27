@@ -1,34 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Pressable, Image } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import menu from "../images/menu_icon.png";
+import { StyleSheet, Text, View, Pressable,} from 'react-native';
+import { Link } from 'expo-router';
 
 export function Main() {
 
   return (
-    <SafeAreaProvider style={{width: '100%'}}>
-      <SafeAreaView style={styles.main_container}>
-        <View style={styles.top_bar}>
-          <Image source={menu}/>
-        </View>
-
-        <View style={styles.nav_container}>
-            <StatusBar style="auto" />
-            <Pressable style={styles.button}>
-                <Text>Consumo</Text>
-            </Pressable>
-            <Pressable style={styles.button}>
-                <Text>Calidad</Text>
-            </Pressable>
-            <Pressable style={styles.button}>
-                <Text>Status</Text>
-            </Pressable>        
-        </View>            
-      </SafeAreaView>
-   
-    </SafeAreaProvider>
+    <View style={styles.main_container}>
+      <View style={styles.nav_container}>
+        <Link href="/consumo" asChild style={styles.button}>
+        <Pressable>
+            <Text>Consumo</Text>
+        </Pressable>        
+        </Link>
+        <Link href="/calidad" asChild style={styles.button}>
+        <Pressable style={styles.button}>
+            <Text>Calidad</Text>
+        </Pressable>        
+        </Link>
+        <Link href="/status" asChild style={styles.button}>
+        <Pressable style={styles.button}>
+            <Text>Status</Text>
+        </Pressable>        
+        </Link>
+        <Link href="/consumo" asChild style={styles.button}>
+        <Pressable style={styles.button}>
+            <Text>Ranking</Text>
+        </Pressable>           
+        </Link>
+      </View>          
+    </View>
   );
 }
 
@@ -37,25 +37,17 @@ const styles = StyleSheet.create({
   main_container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#000',
     width: '100%',
-  },
-
-  top_bar: {
-    height: 40,
-    width: '100%',
-    backgroundColor: '#fff'
+    justifyContent: 'space-between',
   },
 
   nav_container: {
-    backgroundColor: '#fff',
     width: '100%',
     maxWidth: 800,
-    height: 600,
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 30,
-    paddingRight: 30,
+    height: '100%',
+    paddingTop: 110,
+    paddingBottom: 130,
+    paddingHorizontal: 30,
     alignItems: 'center',
     justifyContent:'space-between',
   },
@@ -66,5 +58,6 @@ const styles = StyleSheet.create({
     height: 60,
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: 20,
   }
 });
