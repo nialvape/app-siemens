@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { Link } from 'expo-router';
 
-export function Main() {
+export function Home() {
   return (
     <View style={styles.main_container}>
       <View style={styles.nav_container}>

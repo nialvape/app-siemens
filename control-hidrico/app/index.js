@@ -1,7 +1,7 @@
-import { Main } from '../components/Main.jsx';
+import { Login } from './login.js';
 
 export default function Index() {
     return (
-        <Main/>
+        <Login/>
     )
 }
