@@ -1,66 +1,61 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Pressable, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, Pressable, Alert } from 'react-native';
 import { Link } from 'expo-router';
 
 export default function Consumo() {
   const [datos, setDatos] = useState({
     linea: 'A',
-    consumoActual: 0,  // en litros
-    consumoAnterior: 0, // en litros
-    incremento: 0, // porcentaje de cambio
+    consumoActual: 2500,
+    consumoAnterior: 2200,
+    incremento: 0,
   });
-  const [loading, setLoading] = useState(true); // Estado de carga
-  const apiUrl = 'http://localhost:3001/buildings/1/lines/A'; // Cambia esto según tu endpoint
 
   useEffect(() => {
-    const fetchDatos = async () => {
+    const incrementoPorcentaje = ((datos.consumoActual - datos.consumoAnterior) / datos.consumoAnterior) * 100;
+    setDatos((prevDatos) => ({
+      ...prevDatos,
+      incremento: incrementoPorcentaje.toFixed(2),
+    }));
+  }, [datos.consumoActual, datos.consumoAnterior]);
+
+  useEffect(() => {
+    const fetchData = async () => {
       try {
-        const response = await fetch(apiUrl);
+        const response = await fetch('http://localhost:3001/building/1/A');
+        if (!response.ok) {
+          throw new Error('Error al obtener datos de consumo');
+        }
         const data = await response.json();
-        
-        // Suponiendo que la API devuelve un objeto con las propiedades requeridas
         setDatos({
-          linea: data.line, // Asegúrate de que la API devuelva el nombre de la línea
+          linea: data.line,
           consumoActual: data.consumptionCurrent,
           consumoAnterior: data.consumptionPrevious,
-          incremento: 0, // Se calculará más adelante
+          incremento: ((data.consumptionCurrent - data.consumptionPrevious) / data.consumptionPrevious) * 100,
         });
       } catch (error) {
-        console.error('Error al obtener datos de consumo:', error);
-      } finally {
-        setLoading(false); // Cambiar estado de carga
+        Alert.alert('Error', `Error al obtener datos de consumo: ${error.message}`);
       }
     };
 
-    fetchDatos();
-  }, [apiUrl]);
+    fetchData();
+  }, []);
 
-  useEffect(() => {
-    // Cálculo del porcentaje de incremento o decremento
-    if (datos.consumoAnterior > 0) {
-      const incrementoPorcentaje = ((datos.consumoActual - datos.consumoAnterior) / datos.consumoAnterior) * 100;
-      setDatos((prevDatos) => ({
-        ...prevDatos,
-        incremento: incrementoPorcentaje.toFixed(2),
-      }));
+  const getColorForIncrement = () => {
+    if (datos.incremento > 0) {
+      return styles.incrementNegative;
+    } else if (datos.incremento < 0) {
+      return styles.incrementPositive;
+    } else {
+      return styles.incrementNeutral;
     }
-  }, [datos.consumoActual, datos.consumoAnterior]);
-
-  if (loading) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#4E8098" />
-        <Text>Cargando datos...</Text>
-      </View>
-    );
-  }
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Consumo de Agua - Línea {datos.linea}</Text>
-      <Text>Consumo del mes actual: {datos.consumoActual} litros</Text>
-      <Text>Consumo del mes anterior: {datos.consumoAnterior} litros</Text>
-      <Text>
+      <Text style={styles.text}>Consumo del mes actual: {datos.consumoActual} litros</Text>
+      <Text style={styles.text}>Consumo del mes anterior: {datos.consumoAnterior} litros</Text>
+      <Text style={[styles.incrementText, getColorForIncrement()]}>
         {datos.incremento >= 0
           ? `Incremento en consumo: +${datos.incremento}%`
           : `Decremento en consumo: ${datos.incremento}%`}
@@ -78,29 +73,45 @@ export default function Consumo() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    color: '#4E8098',
     marginBottom: 20,
+    textAlign: 'center',
+  },
+  text: {
+    fontSize: 18,
+    color: '#ffffff',
+    marginBottom: 10,
+  },
+  incrementText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 10,
+  },
+  incrementNegative: {
+    color: '#F44336',
+  },
+  incrementPositive: {
+    color: '#4CAF50',
+  },
+  incrementNeutral: {
+    color: '#FFC107',
   },
   button: {
     backgroundColor: '#4E8098',
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingVertical: 12,
+    paddingHorizontal: 25,
     borderRadius: 10,
     marginTop: 20,
   },
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
-  },
-  loadingContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });

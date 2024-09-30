@@ -4,9 +4,8 @@ import { Link } from 'expo-router';
 
 export default function Ranking() {
   const [rankingData, setRankingData] = useState([]);
-  const [userLine, setUserLine] = useState('A'); // Aquí debes obtener la línea del usuario desde el backend
+  const [userLine, setUserLine] = useState('A');
 
-  // Simulación de datos de ranking
   useEffect(() => {
     const fetchData = () => {
       const data = [
@@ -20,14 +19,14 @@ export default function Ranking() {
     fetchData();
   }, []);
 
-  const firstPlace = rankingData[0]?.linea; // Línea en primer lugar
-  const lastPlace = rankingData[rankingData.length - 1]?.linea; // Línea en último lugar
+  const firstPlace = rankingData[0]?.linea;
+  const lastPlace = rankingData[rankingData.length - 1]?.linea;
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Ranking de Consumo</Text>
-      <Text>Consulta el ranking de consumo de agua por líneas.</Text>
-      <Text>Tu línea se encuentra en el puesto con menor consumo para acceder a mayores beneficios.</Text>
+      <Text style={styles.subtitle}>Consulta el ranking de consumo de agua por líneas.</Text>
+      <Text style={styles.subtitle}>Tu línea se encuentra en el puesto con menor consumo para acceder a mayores beneficios.</Text>
 
       {userLine === firstPlace && (
         <View style={styles.alertContainer}>
@@ -42,7 +41,7 @@ export default function Ranking() {
       )}
 
       <FlatList
-        data={rankingData.sort((a, b) => a.consumo - b.consumo)} // Ordena por consumo ascendente
+        data={rankingData.sort((a, b) => a.consumo - b.consumo)}
         keyExtractor={(item) => item.linea}
         renderItem={({ item, index }) => (
           <View style={styles.item}>
@@ -68,14 +67,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
+    backgroundColor: '#092327',
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
+    color: '#E0F7FA',
     marginBottom: 20,
   },
+  subtitle: {
+    fontSize: 16,
+    color: '#B2EBF2',
+    marginVertical: 5,
+    textAlign: 'center',
+  },
   alertContainer: {
-    backgroundColor: '#ffecb3',
+    backgroundColor: '#004D40',
     padding: 10,
     borderRadius: 5,
     marginVertical: 10,
@@ -85,10 +92,10 @@ const styles = StyleSheet.create({
   alertText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#ff9800',
+    color: '#FFFFFF',
   },
   item: {
-    backgroundColor: '#f9c2ff',
+    backgroundColor: '#00796B',
     padding: 10,
     marginVertical: 5,
     borderRadius: 5,
@@ -97,16 +104,17 @@ const styles = StyleSheet.create({
   },
   itemText: {
     fontSize: 18,
+    color: '#FFFFFF',
   },
   button: {
-    backgroundColor: '#4E8098',
+    backgroundColor: '#0097A7',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
     marginTop: 20,
   },
   buttonText: {
-    color: 'white',
+    color: '#FFFFFF',
     fontWeight: 'bold',
   },
 });
