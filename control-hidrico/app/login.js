@@ -2,22 +2,34 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import CustomTextInput from '../components/CustomTextInput';
 import CustomInputButton from '../components/CustomInputButton';
+import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
 export function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigation = useNavigation(); // Hook para la navegación
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     // Validación simple
     if (email === '' || password === '') {
       Alert.alert('Error', 'Todos los campos son obligatorios');
       return;
     }
 
-    // Lógica de inicio de sesión (puedes reemplazarla por API o autenticación real)
-    if (email === 'test@example.com' && password === 'password') {
-      Alert.alert('Inicio de sesión exitoso');
-    } else {
+    try {
+      // Lógica de inicio de sesión usando la nueva ruta de login
+      const response = await axios.post('http://localhost:3001/login', {
+        user_name: email, // Ajusta si tu backend espera un nombre de usuario en lugar de un correo
+        user_password: password,
+      });
+
+      if (response.data) {
+        Alert.alert('Inicio de sesión exitoso');
+        navigation.navigate('Home'); // Redirige a la pantalla principal
+      }
+    } catch (error) {
+      console.error(error);
       Alert.alert('Error', 'Correo o contraseña incorrectos');
     }
   };

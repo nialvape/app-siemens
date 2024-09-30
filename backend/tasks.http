@@ -1,0 +1,20 @@
+@api = http://localhost:3001/users
+
+GET {{api}}/
+
+###
+
+POST {{api}}/
+Content-Type: application/json
+
+{
+    "user_name": "nuevo_usuario",
+    "user_password": "nueva_contraseña",
+    "email_address": "nuevo_usuario@example.com",
+    "first_name": "Nuevo",
+    "last_name": "Usuario",
+    "phonenumber": "+5491150123456"
+}
+
+###
+GET {{api}}/count

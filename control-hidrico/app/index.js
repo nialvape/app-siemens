@@ -1,7 +1,7 @@
-import { Login } from './login.js';
+import { Home } from './home.js';
 
 export default function Index() {
     return (
-        <Login/>
+        <Home/>
     )
 }
